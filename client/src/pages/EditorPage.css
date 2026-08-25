@@ -1,0 +1,366 @@
+/* ─── Root ───────────────────────────────────────────────────────────────── */
+.ep-root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #f0f4f8;
+    overflow: hidden;
+}
+
+/* ─── Top bar ────────────────────────────────────────────────────────────── */
+.ep-topbar {
+    height: 56px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    flex-shrink: 0;
+    z-index: 20;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+
+.btn-back:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.ep-title-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    background: transparent;
+    min-width: 0;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.ep-title-input:not(:disabled):hover,
+.ep-title-input:not(:disabled):focus {
+    background: #f8fafc;
+}
+
+.ep-title-input:disabled {
+    color: #475569;
+    cursor: default;
+}
+
+.ep-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Save status */
+.save-status {
+    font-size: 12px;
+    min-width: 72px;
+    text-align: right;
+}
+
+.save-status--idle {
+    color: transparent;
+}
+
+.save-status--unsaved {
+    color: #94a3b8;
+}
+
+.save-status--saving {
+    color: #64748b;
+}
+
+.save-status--saved {
+    color: #059669;
+}
+
+.save-status--error {
+    color: #dc2626;
+}
+
+.save-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.save-error button {
+    background: none;
+    border: 1px solid #fca5a5;
+    border-radius: 4px;
+    color: #dc2626;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.view-only-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.btn-share {
+    padding: 6px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: not-allowed;
+}
+
+/* ─── Toolbar ────────────────────────────────────────────────────────────── */
+.ep-toolbar {
+    height: 44px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+
+.ep-toolbar--disabled {
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background: #e2e8f0;
+    margin: 0 6px;
+}
+
+.toolbar-btn {
+    width: 34px;
+    height: 30px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #475569;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s, color 0.1s;
+}
+
+.toolbar-btn:hover:not(:disabled) {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.toolbar-btn--active {
+    background: #ede9fe;
+    color: #4f46e5;
+}
+
+.toolbar-btn--active:hover:not(:disabled) {
+    background: #ddd6fe;
+    color: #4338ca;
+}
+
+.toolbar-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ─── Editor body ─────────────────────────────────────────────────────────── */
+.ep-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 20px 80px;
+}
+
+.ep-paper {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 4px 20px rgba(0, 0, 0, 0.04);
+    max-width: 760px;
+    min-height: calc(100vh - 200px);
+    margin: 0 auto;
+}
+
+/* ─── ProseMirror (TipTap) content styles ────────────────────────────────── */
+.ep-editor-content,
+.ep-editor-content>div {
+    height: 100%;
+}
+
+.ep-editor-content .ProseMirror {
+    outline: none;
+    padding: 48px 56px;
+    min-height: calc(100vh - 200px);
+    font-size: 15px;
+    line-height: 1.75;
+    color: #1e293b;
+}
+
+/* ProseMirror focused: intentionally no extra outline */
+
+/* Placeholder */
+.ep-editor-content .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: #94a3b8;
+    pointer-events: none;
+    float: left;
+    height: 0;
+}
+
+/* Headings */
+.ep-editor-content .ProseMirror h1 {
+    font-size: 2em;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 1em 0 0.4em;
+    line-height: 1.25;
+}
+
+.ep-editor-content .ProseMirror h2 {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0.9em 0 0.3em;
+    line-height: 1.3;
+}
+
+/* Paragraph */
+.ep-editor-content .ProseMirror p {
+    margin-bottom: 0.75em;
+}
+
+/* Lists */
+.ep-editor-content .ProseMirror ul,
+.ep-editor-content .ProseMirror ol {
+    padding-left: 1.6em;
+    margin-bottom: 0.75em;
+}
+
+.ep-editor-content .ProseMirror li {
+    margin-bottom: 0.25em;
+}
+
+/* Inline */
+.ep-editor-content .ProseMirror strong {
+    font-weight: 700;
+}
+
+.ep-editor-content .ProseMirror em {
+    font-style: italic;
+}
+
+.ep-editor-content .ProseMirror u {
+    text-decoration: underline;
+}
+
+/* Blockquote (from StarterKit) */
+.ep-editor-content .ProseMirror blockquote {
+    border-left: 3px solid #cbd5e1;
+    margin: 0 0 0.75em;
+    padding-left: 1em;
+    color: #64748b;
+}
+
+/* Code */
+.ep-editor-content .ProseMirror code {
+    background: #f1f5f9;
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.875em;
+}
+
+/* ─── Loading / Error center ──────────────────────────────────────────────── */
+.ep-center {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #f0f4f8;
+}
+
+.ep-loading-text {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.ep-error-box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.ep-error-msg {
+    font-size: 16px;
+    font-weight: 500;
+    color: #dc2626;
+}
+
+/* Spinner (shared with dashboard) */
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #4f46e5;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .ep-editor-content .ProseMirror {
+        padding: 28px 24px;
+    }
+
+    .ep-body {
+        padding: 16px 8px 60px;
+    }
+
+    .ep-topbar {
+        padding: 0 12px;
+        gap: 8px;
+    }
+}

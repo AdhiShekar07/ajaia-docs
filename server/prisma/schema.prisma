@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  documents Document[] @relation("Owner")
+  shares    Share[]
+  createdAt DateTime   @default(now())
+}
+
+model Document {
+  id        Int      @id @default(autoincrement())
+  title     String   @default("Untitled Document")
+  content   String   @default("{}")
+  ownerId   Int
+  owner     User     @relation("Owner", fields: [ownerId], references: [id])
+  shares    Share[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Share {
+  id         Int      @id @default(autoincrement())
+  documentId Int
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  permission String   @default("VIEW")  // "VIEW" | "EDIT"
+  createdAt  DateTime @default(now())
+
+  @@unique([documentId, userId])
+}
